@@ -74,6 +74,14 @@ class SpinnakerUserInfoTokenServices implements ResourceServerTokenServices {
     def username = details[userInfoMapping.username] as String
     def roles = userRolesProvider.loadRoles(username)
 
+    // Added to support roles being passed from Gluu to support Active Directory and LDAP roles
+    if (!roles) {
+      def gluuRoles = details[userInfoMapping.roles] as String
+      if (gluuRoles) {
+        roles.addAll(gluuRoles.substring(1, gluuRoles.size() - 1).split(", "))
+      }
+    }
+
     User spinnakerUser = new User(
         email: details[userInfoMapping.email] as String,
         firstName: details[userInfoMapping.firstName] as String,

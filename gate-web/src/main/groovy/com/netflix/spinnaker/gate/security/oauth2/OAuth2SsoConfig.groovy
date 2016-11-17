@@ -85,6 +85,7 @@ class OAuth2SsoConfig extends OAuth2SsoConfigurerAdapter {
     String firstName = "given_name"
     String lastName = "family_name"
     String username = "email"
+    String roles = "roles"
   }
 
   @Component
